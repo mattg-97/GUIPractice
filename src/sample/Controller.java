@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -25,13 +26,17 @@ public class Controller implements Initializable {
     public Button depositButton;
     public Button paymentButton;
     public Button logoutButton;
+    public Button yesLogout;
+    public Button dontLogout;
+    public Button seeBalanceButton;
     Model loginModel = new Model();
     @FXML public Button loginButton;
     @FXML public PasswordField passwordField;
     @FXML public TextField usernameField;
     @FXML public Label loginMessage;
     @FXML public ImageView bankImage;
-    public boolean loggedIn = false;
+    public static int userid;
+    public static double actualBalance;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,25 +48,26 @@ public class Controller implements Initializable {
     }
 
     public void loginAttempt(ActionEvent event) throws Exception{
-
-
-
         try {
             if (loginModel.isLogin(usernameField.getText(), passwordField.getText())){
+                userid = (loginModel.getUserid(usernameField.getText(), passwordField.getText()));
+                actualBalance = (loginModel.returnBalance(loginModel.getUserid(usernameField.getText(), passwordField.getText())));
                 loginMessage.setText("Username/Password Correct.");
                 Parent root = FXMLLoader.load(getClass().getResource("OnlineBanking.fxml"));
                 Stage window = (Stage) loginButton.getScene().getWindow();
                 window.setScene(new Scene(root, 600, 400));
             } else {
                 loginMessage.setText("Username/Password Incorrect.");
-
             }
         } catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public void logout(ActionEvent event) {
+    public void logout(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("LogoutConfirm.fxml"));
+        Stage window = (Stage) logoutButton.getScene().getWindow();
+        window.setScene(new Scene(root, 300, 200));
     }
 
     public void makePayment(ActionEvent event) {
@@ -71,5 +77,20 @@ public class Controller implements Initializable {
     }
 
     public void withdraw(ActionEvent event) {
+    }
+
+
+    public void confirmLogout(ActionEvent event) {
+        System.exit(1);
+    }
+
+    public void returnToOLB(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("OnlineBanking.fxml"));
+        Stage window = (Stage) dontLogout.getScene().getWindow();
+        window.setScene(new Scene(root, 600, 400));
+    }
+
+    public void displayBalance(ActionEvent event) {
+        balance.setText("£" + actualBalance);
     }
 }

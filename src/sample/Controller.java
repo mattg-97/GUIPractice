@@ -2,12 +2,17 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -26,22 +31,30 @@ public class Controller implements Initializable {
     @FXML public TextField usernameField;
     @FXML public Label loginMessage;
     @FXML public ImageView bankImage;
+    public boolean loggedIn = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (loginModel.connected){
-            databaseConnection.setText("Connected to database");
-        } else {
-            databaseConnection.setText("Not Connected to database");
-        }
+        //displayImage();
+    }
+    public void displayImage(){
+        Image bankLogo = new Image(getClass().getResourceAsStream("Business-bank-account-e1534519443766.jpeg"));
+        bankImage.setImage(bankLogo);
     }
 
     public void loginAttempt(ActionEvent event) throws Exception{
+
+
+
         try {
             if (loginModel.isLogin(usernameField.getText(), passwordField.getText())){
                 loginMessage.setText("Username/Password Correct.");
+                Parent root = FXMLLoader.load(getClass().getResource("OnlineBanking.fxml"));
+                Stage window = (Stage) loginButton.getScene().getWindow();
+                window.setScene(new Scene(root, 600, 400));
             } else {
                 loginMessage.setText("Username/Password Incorrect.");
+
             }
         } catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));

@@ -10,10 +10,12 @@ import javafx.stage.Stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Controller myController = new Controller();
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         primaryStage.setTitle("Online Banking Login");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+
     }
 
 

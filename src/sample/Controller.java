@@ -20,21 +20,35 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML public Label databaseConnection;
-    public Label balance;
-    public Button withdrawButton;
-    public Button depositButton;
-    public Button paymentButton;
-    public Button logoutButton;
-    public Button yesLogout;
-    public Button dontLogout;
-    public Button seeBalanceButton;
     Model loginModel = new Model();
-    @FXML public Button loginButton;
-    @FXML public PasswordField passwordField;
-    @FXML public TextField usernameField;
-    @FXML public Label loginMessage;
-    @FXML public ImageView bankImage;
+    @FXML
+    public Label databaseConnection;
+    @FXML
+    public Label balance;
+    @FXML
+    public Button withdrawButton;
+    @FXML
+    public Button depositButton;
+    @FXML
+    public Button paymentButton;
+    @FXML
+    public Button logoutButton;
+    @FXML
+    public Button yesLogout;
+    @FXML
+    public Button dontLogout;
+    @FXML
+    public Button seeBalanceButton;
+    @FXML
+    public Button loginButton;
+    @FXML
+    public PasswordField passwordField;
+    @FXML
+    public TextField usernameField;
+    @FXML
+    public Label loginMessage;
+    @FXML
+    public ImageView bankImage;
     public static int userid;
     public static double actualBalance;
 
@@ -42,14 +56,15 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //displayImage();
     }
-    public void displayImage(){
+
+    public void displayImage() {
         Image bankLogo = new Image(getClass().getResourceAsStream("Business-bank-account-e1534519443766.jpeg"));
         bankImage.setImage(bankLogo);
     }
 
-    public void loginAttempt(ActionEvent event) throws Exception{
+    public void loginAttempt(ActionEvent event) throws Exception {
         try {
-            if (loginModel.isLogin(usernameField.getText(), passwordField.getText())){
+            if (loginModel.isLogin(usernameField.getText(), passwordField.getText())) {
                 userid = (loginModel.getUserid(usernameField.getText(), passwordField.getText()));
                 actualBalance = (loginModel.returnBalance(loginModel.getUserid(usernameField.getText(), passwordField.getText())));
                 loginMessage.setText("Username/Password Correct.");
@@ -59,7 +74,7 @@ public class Controller implements Initializable {
             } else {
                 loginMessage.setText("Username/Password Incorrect.");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
